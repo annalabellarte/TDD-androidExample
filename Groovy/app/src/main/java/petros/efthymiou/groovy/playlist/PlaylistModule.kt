@@ -4,12 +4,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 @Module
-@InstallIn(FragmentComponent::class)
+@InstallIn(SingletonComponent::class)
 class PlaylistModule {
 
     @Provides
@@ -18,6 +21,7 @@ class PlaylistModule {
     }
 
     @Provides
+    @Singleton
     fun getRetrofit(): Retrofit{
         return Retrofit.Builder()
             .baseUrl("http://192.168.1.160:3000/")
