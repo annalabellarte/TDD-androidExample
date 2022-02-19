@@ -47,7 +47,7 @@ class PlaylistFeature {
             .check(matches(withText("rock")))
             .check(matches(isDisplayed()))
 
-        onView(allOf(withId(R.id.playlist_image), isDescendantOfA(nthChildOf(withId(R.id.playlists_list), 0))))
+        onView(allOf(withId(R.id.playlist_image), isDescendantOfA(nthChildOf(withId(R.id.playlists_list), 1))))
             .check(matches(withDrawable(R.mipmap.playlist)))
             .check(matches(isDisplayed()))
     }
@@ -63,7 +63,20 @@ class PlaylistFeature {
         assertNotDisplayed(R.id.loading)
     }
 
-    fun nthChildOf(parentMatcher: Matcher<View>, childPosition: Int): Matcher<View> {
+    @Test
+    fun displaysRockImageForRockListItem(){
+        Thread.sleep(4000)
+
+        onView(allOf(withId(R.id.playlist_image), isDescendantOfA(nthChildOf(withId(R.id.playlists_list), 0))))
+            .check(matches(withDrawable(R.mipmap.rock)))
+            .check(matches(isDisplayed()))
+        onView(allOf(withId(R.id.playlist_image), isDescendantOfA(nthChildOf(withId(R.id.playlists_list), 3))))
+            .check(matches(withDrawable(R.mipmap.rock)))
+            .check(matches(isDisplayed()))
+    }
+
+
+    private fun nthChildOf(parentMatcher: Matcher<View>, childPosition: Int): Matcher<View> {
         return object : TypeSafeMatcher<View>() {
             override fun describeTo(description: Description) {
                 description.appendText("position $childPosition of parent ")

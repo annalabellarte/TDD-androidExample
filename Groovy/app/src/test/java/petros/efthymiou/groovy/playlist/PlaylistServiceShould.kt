@@ -12,7 +12,7 @@ import petros.efthymiou.groovy.utils.BaseUnitTest
 
 class PlaylistServiceShould: BaseUnitTest() {
     private val api: PlaylistAPI = mock()
-    private val playlists = mock<List<Playlist>>()
+    private val playlists = mock<List<PlaylistRaw>>()
     private val exception = RuntimeException("Si è verificato un errore")
 
     @Test

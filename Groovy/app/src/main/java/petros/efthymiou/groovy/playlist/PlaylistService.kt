@@ -9,7 +9,7 @@ class PlaylistService @Inject constructor(
     private val playlistAPI: PlaylistAPI
 ) {
 
-    suspend fun fetchPlaylists() : Flow<Result<List<Playlist>>> = flow{
+    suspend fun fetchPlaylists() : Flow<Result<List<PlaylistRaw>>> = flow{
         emit(Result.success(playlistAPI.fetchAllPlaylists()))
     }.catch { error ->
         emit(Result.failure(error))
