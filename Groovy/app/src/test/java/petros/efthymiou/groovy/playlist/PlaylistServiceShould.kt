@@ -37,14 +37,14 @@ class PlaylistServiceShould: BaseUnitTest() {
         assertEquals(exception, service.fetchPlaylists().first().exceptionOrNull())
     }
 
-    private fun mockSuccessfulCase(): PlaylistService {
+    private suspend fun mockSuccessfulCase(): PlaylistService {
         whenever(api.fetchAllPlaylists()).thenReturn(
             playlists
         )
         return PlaylistService(api)
     }
 
-    private fun mockFailureCase(): PlaylistService {
+    private suspend fun mockFailureCase(): PlaylistService {
         whenever(api.fetchAllPlaylists()).thenThrow(exception)
         val service = PlaylistService(api)
         return service

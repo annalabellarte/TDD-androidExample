@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
@@ -24,20 +26,24 @@ import javax.inject.Inject
 class PlaylistFragment : Fragment() {
 
     private val viewModel:PlaylistViewModel by viewModels()
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_playlist, container, false)
 
+        viewModel.loading.observe(viewLifecycleOwner){ showLoading ->
+            val loading = view.findViewById<View>(R.id.loading)
+            loading.isVisible = showLoading
+        }
 
-        viewModel.playlists.observe(this as LifecycleOwner, { playlists ->
-            if(playlists.getOrNull() !=null)
-                setupList(view, playlists.getOrNull()!!)
-            else {
+        viewModel.playlists.observe(this as LifecycleOwner) { playlists ->
+            if (playlists.getOrNull() != null) {
+                val playList = view.findViewById<View>(R.id.playlists_list)
+                setupList(playList, playlists.getOrNull()!!)
+            } else {
                 //TODO
                 Log.e("Fragment", playlists.exceptionOrNull()?.localizedMessage ?: "")
             }
-        })
+        }
 
         return view
     }
